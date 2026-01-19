@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/edu/ost/typetrace">
+    <file preprocess="xml-stripblanks">ui/window.blp</file>
+    <file preprocess="xml-stripblanks">ui/heatmap.blp</file>
+    <file preprocess="xml-stripblanks">ui/statistics.blp</file>
+    <file preprocess="xml-stripblanks">ui/verbose.blp</file>
+    <file preprocess="xml-stripblanks">ui/preferences.blp</file>
+    <file preprocess="xml-stripblanks">ui/help-overlay.blp</file>
+  </gresource>
+</gresources>

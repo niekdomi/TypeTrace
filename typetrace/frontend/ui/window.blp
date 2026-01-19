@@ -1,0 +1,54 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $TypetraceWindow: Adw.ApplicationWindow {
+  title: "TypeTrace";
+
+  content: Adw.ToastOverlay toast_overlay {
+    Adw.ToolbarView {
+      [top]
+      Adw.HeaderBar {
+        title-widget: Adw.ViewSwitcher view_switcher {
+          policy: wide;
+          stack: stack;
+        };
+
+        [start]
+        Gtk.Button backend_toggle {
+          label: "Backend stopped";
+          css-classes: ["backend-status-stopped", "flat"];
+          margin-start: 10;
+        }
+
+        [end]
+        MenuButton {
+          primary: true;
+          icon-name: "open-menu-symbolic";
+          tooltip-text: "Main Menu";
+          menu-model: primary_menu;
+        }
+      }
+
+      content: Adw.ViewStack stack {};
+    }
+  };
+}
+
+menu primary_menu {
+  section {
+    item {
+      label: "_Preferences";
+      action: "app.preferences";
+    }
+
+    item {
+      label: "_Keyboard Shortcuts";
+      action: "win.show-help-overlay";
+    }
+
+    item {
+      label: "_About TypeTrace";
+      action: "app.about";
+    }
+  }
+}
