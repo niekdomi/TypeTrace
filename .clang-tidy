@@ -1,19 +1,41 @@
 ---
+UseColor: true
+FormatStyle: file
+HeaderFilterRegex: ".*/(src|tests)/.*"
+SystemHeaders: false
+
 Checks: >
   *,
   -altera-*,
-  -llvmlibc-*,
-  -concurrency-mt-unsafe,
-  -cppcoreguidelines-pro-type-vararg,
-  -hicpp-vararg,
+  -bugprone-easily-swappable-parameters,
+  -cppcoreguidelines-avoid-magic-numbers,
   -fuchsia-default-arguments-calls,
-  -fuchsia-multiple-inheritance,
+  -fuchsia-default-arguments-declarations,
   -fuchsia-trailing-return,
   -llvm-header-guard,
+  -llvm-prefer-static-over-anonymous-namespace,
+  -llvmlibc-*,
+  -misc-no-recursion,
+  -portability-avoid-pragma-once,
+  -readability-function-cognitive-complexity,
   -readability-identifier-length,
+  -readability-magic-numbers,
 
 CheckOptions:
-  # Types start with upper case (PascalCase): MyClass
+  # ----- Linter rule options -----
+  - key: modernize-use-trailing-return-type.TransformLambdas
+    value: all_except_auto
+
+  - key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic
+    value: true
+
+  # ----- Identifier naming conventions -----
+
+  # Template parameter names use PascalCase: InputIterator
+  - key: readability-identifier-naming.TemplateParameterCase
+    value: "CamelCase"
+
+  # Types use PascalCase: MyClass
   - key: readability-identifier-naming.ClassCase
     value: "CamelCase"
   - key: readability-identifier-naming.StructCase
@@ -27,35 +49,26 @@ CheckOptions:
   - key: readability-identifier-naming.UnionCase
     value: "CamelCase"
 
-  # Functions and variables start with lower case (camelStyle): myMethod
-  - key: readability-identifier-naming.FunctionCase
-    value: "camelBack"
-  - key: readability-identifier-naming.MethodCase
-    value: "camelBack"
-
-  # Constants names use upper case with underscores: const int TIMEOUT_MS = 100
+  # Constants use upper_snake_case: const int TIMEOUT_MS = 100
   - key: readability-identifier-naming.GlobalConstantCase
     value: "UPPER_CASE"
-
   - key: readability-identifier-naming.ConstexprVariableCase
     value: "UPPER_CASE"
-
-  # Macro names use upper case with underscores: INT_MAX
-  - key: readability-identifier-naming.MacroDefinitionCase
+  - key: readability-identifier-naming.EnumConstantCase
     value: "UPPER_CASE"
 
-  # Template parameter names use PascalCase: InputIterator
-  - key: readability-identifier-naming.TemplateParameterCase
-    value: "CamelCase"
+  # Functions and variables use snake_case: my_method
+  - key: readability-identifier-naming.FunctionCase
+    value: "lower_case"
+  - key: readability-identifier-naming.MethodCase
+    value: "lower_case"
 
-  # All other names use snake case: unordered_map
+  # All other names use snake_case: config_value
   - key: readability-identifier-naming.StaticConstantCase
     value: "lower_case"
   - key: readability-identifier-naming.ConstantCase
     value: "lower_case"
   - key: readability-identifier-naming.NamespaceCase
-    value: "lower_case"
-  - key: readability-identifier-naming.EnumConstantCase
     value: "lower_case"
   - key: readability-identifier-naming.ParameterCase
     value: "lower_case"
@@ -63,6 +76,9 @@ CheckOptions:
     value: "lower_case"
   - key: readability-identifier-naming.MemberCase
     value: "lower_case"
-
-HeaderFilterRegex: ".*"
-FormatStyle: file
+  - key: readability-identifier-naming.PrivateMemberCase
+    value: "lower_case"
+  - key: "readability-identifier-naming.PrivateMemberSuffix"
+    value: "_"
+  - key: "readability-identifier-naming.ConstantMemberSuffix"
+    value: "_"
