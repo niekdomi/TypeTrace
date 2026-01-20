@@ -218,15 +218,17 @@ Then log out and log back in for the changes to take effect.
         }
 
         const auto key_code = libinput_event_keyboard_get_key(keyboard_event);
-        const auto* const raw_name = libevdev_event_code_get_name(EV_KEY, key_code);
+        const auto* const key_name_str =
+          libevdev_event_code_get_name(EV_KEY, static_cast<unsigned int>(key_code));
+        const auto key_name =
+          key_name_str != nullptr ? std::string_view(key_name_str) : std::string_view("UNKNOWN");
         // const auto time_now = std::chrono::system_clock::now();
 
-        KeystrokeEvent keystroke{
-          .key_name = (raw_name != nullptr) ? raw_name : "UNKNOWN",
-          .date = "FIX_ME", // std::format("{:%Y-%m-%d}",
-                            // std::chrono::time_point_cast<std::chrono::days>(time_now)),
-          .key_code = key_code,
-        };
+        KeystrokeEvent keystroke{.key_code = key_code,
+                                 .key_name = key_name,
+                                 .date = "FIX_ME", // std::format("{:%Y-%m-%d}",
+                                 // std::chrono::time_point_cast<std::chrono::days>(time_now)),
+                                 .count = 1};
 
         logger.debug("Added keystroke [{}/{}] to buffer: {} (code: {})",
                      buffer_.size() + 1,

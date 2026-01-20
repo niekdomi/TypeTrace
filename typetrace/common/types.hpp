@@ -5,14 +5,14 @@
 
 namespace typetrace {
 
-/// Structure representing a keystroke event
 struct KeystrokeEvent
 {
-    std::string_view key_name; ///< Human-readable name of the key
-    std::string_view date;     ///< Date in YYYY-MM-DD format
-    std::uint32_t key_code{};  ///< Code of the pressed key
+    std::uint32_t key_code;
+    std::string_view key_name;
+    std::string_view date;
+    int count{0}; // Added count field
 };
 
-static_assert(sizeof(KeystrokeEvent) == 40);
+static_assert(sizeof(KeystrokeEvent) <= 48, "KeystrokeEvent is too large");
 
 } // namespace typetrace

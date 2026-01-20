@@ -38,8 +38,8 @@ class Cli final
 
         // Set up callback for EventHandler to flush buffer to database
         cli.event_handler_->set_buffer_callback(
-          [&db_mgr = cli.db_manager_](const std::vector<KeystrokeEvent>& buffer) -> void {
-              if (const auto result = db_mgr->write_to_database(buffer); !result) {
+          [&db_mgr_cb = cli.db_manager_](const std::vector<KeystrokeEvent>& buffer) -> void {
+              if (const auto result = db_mgr_cb->write_to_database(buffer); !result) {
                   common::Logger::instance().error("Failed to write to database: {}",
                                                    result.error().message);
               }
@@ -49,7 +49,7 @@ class Cli final
     }
 
     /// Runs the main event loop for keystroke tracing
-    auto run() -> void
+    auto run() -> std::expected<void, Error>
     {
         while (true) { // TODO(domi): Use event handler to quit
             event_handler_->trace();

@@ -1,51 +1,101 @@
 using Gtk 4.0;
-using Adw 1;
 
-template $TypetraceWindow: Adw.ApplicationWindow {
+template $TypeTraceWindow: Gtk.ApplicationWindow {
   title: "TypeTrace";
+  default-width: 1200;
+  default-height: 800;
 
-  content: Adw.ToastOverlay toast_overlay {
-    Adw.ToolbarView {
-      [top]
-      Adw.HeaderBar {
-        title-widget: Adw.ViewSwitcher view_switcher {
-          policy: wide;
-          stack: stack;
-        };
+  Gtk.Box {
+    orientation: vertical;
 
-        [start]
-        Gtk.Button backend_toggle {
-          label: "Backend stopped";
-          css-classes: ["backend-status-stopped", "flat"];
-          margin-start: 10;
-        }
-
-        [end]
-        MenuButton {
-          primary: true;
-          icon-name: "open-menu-symbolic";
-          tooltip-text: "Main Menu";
-          menu-model: primary_menu;
-        }
+    Gtk.HeaderBar {
+      [title]
+      Gtk.StackSwitcher {
+        stack: main_stack;
       }
 
-      content: Adw.ViewStack stack {};
+      [end]
+      Gtk.MenuButton {
+        icon-name: "open-menu-symbolic";
+        menu-model: primary_menu;
+      }
     }
-  };
+
+    Gtk.Stack main_stack {
+      Gtk.StackPage {
+        name: "heatmap";
+        title: "Heatmap";
+        child: Gtk.Box heatmap_box {
+          orientation: vertical;
+          spacing: 12;
+          margin-top: 24;
+          margin-bottom: 24;
+          margin-start: 24;
+          margin-end: 24;
+
+          Gtk.Label {
+            label: "Heatmap View";
+            styles ["title-1"]
+          }
+
+          Gtk.Label {
+            label: "Keyboard heatmap visualization will appear here";
+            styles ["dim-label"]
+          }
+        };
+      }
+
+      Gtk.StackPage {
+        name: "statistics";
+        title: "Statistics";
+        child: Gtk.Box statistics_box {
+          orientation: vertical;
+          spacing: 12;
+          margin-top: 24;
+          margin-bottom: 24;
+          margin-start: 24;
+          margin-end: 24;
+
+          Gtk.Label {
+            label: "Statistics View";
+            styles ["title-1"]
+          }
+
+          Gtk.Label {
+            label: "Keystroke statistics and charts will appear here";
+            styles ["dim-label"]
+          }
+        };
+      }
+
+      Gtk.StackPage {
+        name: "verbose";
+        title: "Verbose";
+        child: Gtk.Box verbose_box {
+          orientation: vertical;
+          spacing: 12;
+          margin-top: 24;
+          margin-bottom: 24;
+          margin-start: 24;
+          margin-end: 24;
+
+          Gtk.Label {
+            label: "Verbose View";
+            styles ["title-1"]
+          }
+
+          Gtk.Label {
+            label: "Detailed keystroke list will appear here";
+            styles ["dim-label"]
+          }
+        };
+      }
+    }
+  }
 }
 
 menu primary_menu {
   section {
-    item {
-      label: "_Preferences";
-      action: "app.preferences";
-    }
-
-    item {
-      label: "_Keyboard Shortcuts";
-      action: "win.show-help-overlay";
-    }
-
     item {
       label: "_About TypeTrace";
       action: "app.about";
