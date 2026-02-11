@@ -37,43 +37,37 @@ class Logger final
     ~Logger() = default;
 
     template<typename... Args>
-    auto trace([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args)
-      -> void
+    auto trace([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args) -> void
     {
         SPDLOG_LOGGER_TRACE(logger_, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
-    auto debug([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args)
-      -> void
+    auto debug([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args) -> void
     {
         SPDLOG_LOGGER_DEBUG(logger_, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
-    auto info([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args)
-      -> void
+    auto info([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args) -> void
     {
         SPDLOG_LOGGER_INFO(logger_, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
-    auto warn([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args)
-      -> void
+    auto warn([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args) -> void
     {
         SPDLOG_LOGGER_WARN(logger_, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
-    auto error([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args)
-      -> void
+    auto error([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args) -> void
     {
         SPDLOG_LOGGER_ERROR(logger_, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
-    auto critical([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args)
-      -> void
+    auto critical([[maybe_unused]] fmt::format_string<Args...> fmt, [[maybe_unused]] Args&&... args) -> void
     {
         SPDLOG_LOGGER_CRITICAL(logger_, fmt, std::forward<Args>(args)...);
     }

@@ -75,7 +75,7 @@ BreakFunctionDefinitionParameters: false
 BreakInheritanceList: AfterComma
 BreakStringLiterals: false # Buggy? -> bug report?
 BreakTemplateDeclarations: Yes
-ColumnLimit: 100
+ColumnLimit: 120
 CompactNamespaces: false
 # ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 2
@@ -150,4 +150,3 @@ SpacesInSquareBrackets: false
 Standard: Latest
 TabWidth: 4
 UseTab: Never
-

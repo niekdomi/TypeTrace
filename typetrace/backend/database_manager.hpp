@@ -38,10 +38,9 @@ class DatabaseManager final
                 std::filesystem::create_directories(db_dir);
             }
 
-            manager.db_ = std::make_unique<SQLite::Database>(
-              manager.db_file_.string(),
-              static_cast<unsigned int>(SQLite::OPEN_READWRITE)
-                | static_cast<unsigned int>(SQLite::OPEN_CREATE));
+            manager.db_ = std::make_unique<SQLite::Database>(manager.db_file_.string(),
+                                                             static_cast<unsigned int>(SQLite::OPEN_READWRITE)
+                                                               | static_cast<unsigned int>(SQLite::OPEN_CREATE));
 
             // WAL mode
             manager.db_->exec(common::OPTIMIZE_DATABASE_SQL);
@@ -49,12 +48,11 @@ class DatabaseManager final
             logger.info("Database tables created successfully");
         }
         catch (const SQLite::Exception& e) {
-            return std::unexpected(make_database_error(std::format(
-              "Failed to open database '{}': {}", manager.db_file_.string(), e.what())));
+            return std::unexpected(make_database_error(
+              std::format("Failed to open database '{}': {}", manager.db_file_.string(), e.what())));
         }
         catch (const std::filesystem::filesystem_error& e) {
-            return std::unexpected(
-              make_system_error(std::format("Filesystem error: {}", e.what())));
+            return std::unexpected(make_system_error(std::format("Filesystem error: {}", e.what())));
         }
 
         return manager;
@@ -62,8 +60,7 @@ class DatabaseManager final
 
     /// Writes a buffer of keystroke events to the database
     [[nodiscard]]
-    auto write_to_database(const std::vector<common::KeystrokeEvent>& buffer)
-      -> std::expected<void, Error>
+    auto write_to_database(const std::vector<common::KeystrokeEvent>& buffer) -> std::expected<void, Error>
     {
         if (buffer.empty()) {
             return {};
@@ -88,8 +85,7 @@ class DatabaseManager final
               "Inserted {} keystrokes into the database: {}", buffer.size(), db_file_.string());
         }
         catch (const SQLite::Exception& e) {
-            return std::unexpected(
-              make_database_error(std::format("Failed to write to database: {}", e.what())));
+            return std::unexpected(make_database_error(std::format("Failed to write to database: {}", e.what())));
         }
 
         return {};
@@ -107,8 +103,7 @@ class DatabaseManager final
             db_->exec(common::CREATE_KEYSTROKES_TABLE_SQL);
         }
         catch (const SQLite::Exception& e) {
-            return std::unexpected(
-              make_database_error(std::format("Failed to create tables: {}", e.what())));
+            return std::unexpected(make_database_error(std::format("Failed to create tables: {}", e.what())));
         }
         return {};
     }

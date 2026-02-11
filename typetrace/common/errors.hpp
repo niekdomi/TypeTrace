@@ -22,13 +22,10 @@ struct Error
     ErrorCode code;           ///< Error category
     std::string_view message; ///< Detailed error message
 
-    Error(ErrorCode error_code, std::string_view error_message)
-        : code(error_code),
-          message(error_message)
-    {}
+    Error(ErrorCode error_code, std::string_view error_message) : code(error_code), message(error_message) {}
 };
 
-// TODO (domi): Should we keep those types or just use the same error type for all?
+// TODO(domi): Should we keep those types or just use the same error type for all?
 
 /// Create a system error
 [[nodiscard]]

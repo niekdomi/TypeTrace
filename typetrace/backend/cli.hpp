@@ -38,11 +38,9 @@ class Cli final
 
         // Set up callback for EventHandler to flush buffer to database
         cli.event_handler_->set_buffer_callback(
-          [&db_mgr_cb =
-             cli.db_manager_](const std::vector<common::KeystrokeEvent>& buffer) -> void {
+          [&db_mgr_cb = cli.db_manager_](const std::vector<common::KeystrokeEvent>& buffer) -> void {
               if (const auto result = db_mgr_cb->write_to_database(buffer); !result) {
-                  common::Logger::instance().error("Failed to write to database: {}",
-                                                   result.error().message);
+                  common::Logger::instance().error("Failed to write to database: {}", result.error().message);
               }
           });
 
@@ -133,8 +131,7 @@ You should run the frontend of TypeTrace which will run this.
             }
         }
         catch (const std::filesystem::filesystem_error& e) {
-            return std::unexpected(
-              make_system_error(std::format("Failed to create database directory: {}", e.what())));
+            return std::unexpected(make_system_error(std::format("Failed to create database directory: {}", e.what())));
         }
 
         return db_dir;

@@ -9,8 +9,7 @@
 auto main(int argc, char* argv[]) -> int
 {
     try {
-        auto cli_result =
-          typetrace::backend::Cli::create(std::span<char*>(argv, static_cast<std::size_t>(argc)));
+        auto cli_result = typetrace::backend::Cli::create(std::span<char*>(argv, static_cast<std::size_t>(argc)));
 
         if (!cli_result) {
             std::println(std::cerr, "Failed to initialize CLI: {}", cli_result.error().message);

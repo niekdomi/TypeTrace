@@ -48,9 +48,7 @@ class EventHandler
     }
 
     /// Sets the callback function to be called when the buffer needs to be flushed
-    auto
-      set_buffer_callback(std::function<void(const std::vector<common::KeystrokeEvent>&)> callback)
-        -> void
+    auto set_buffer_callback(std::function<void(const std::vector<common::KeystrokeEvent>&)> callback) -> void
     {
         buffer_callback_ = std::move(callback);
     }
@@ -104,8 +102,7 @@ class EventHandler
 
         struct group const * const input_group = getgrnam("input");
         if (input_group == nullptr) {
-            return std::unexpected(
-              make_system_error("Input group does not exist. Please create it"));
+            return std::unexpected(make_system_error("Input group does not exist. Please create it"));
         }
 
         const gid_t input_gid = input_group->gr_gid;
@@ -116,8 +113,7 @@ class EventHandler
 
         if (std::ranges::find(groups, input_gid) == groups.end()) {
             print_input_group_permission_help();
-            return std::unexpected(
-              make_permission_error("User not in 'input' group. See instructions above"));
+            return std::unexpected(make_permission_error("User not in 'input' group. See instructions above"));
         }
 
         common::Logger::instance().info("User is a member of the 'input' group");
@@ -146,8 +142,7 @@ Then log out and log back in for the changes to take effect.
         common::Logger::instance().info("Checking for device accessibility...");
 
         if (li_ == nullptr) {
-            return std::unexpected(
-              make_system_error("Libinput is not initialized. Cannot check device accessibility"));
+            return std::unexpected(make_system_error("Libinput is not initialized. Cannot check device accessibility"));
         }
 
         if (libinput_dispatch(li_.get()) < 0) {
@@ -174,9 +169,7 @@ Then log out and log back in for the changes to take effect.
         common::Logger::instance().info("Initializing libinput context...");
 
         static const struct libinput_interface interface = {
-          .open_restricted = [](const char* const path, const int flags, void*) -> int {
-              return ::open(path, flags);
-          },
+          .open_restricted = [](const char* const path, const int flags, void*) -> int { return ::open(path, flags); },
           .close_restricted = [](const int fd, void*) -> void { ::close(fd); },
         };
 
@@ -203,10 +196,9 @@ Then log out and log back in for the changes to take effect.
 
     /// Processes a libinput keyboard event into a keystroke event
     [[nodiscard]]
-    auto process_keyboard_event(struct libinput_event* event)
-      -> std::optional<common::KeystrokeEvent>
+    auto process_keyboard_event(struct libinput_event* event) -> std::optional<common::KeystrokeEvent>
     {
-        auto& logger = common::Logger::instance();
+        cauto& logger = common::Logger::instance();
 
         auto* keyboard_event = libinput_event_get_keyboard_event(event);
         if (keyboard_event == nullptr) {
@@ -220,18 +212,15 @@ Then log out and log back in for the changes to take effect.
         }
 
         const auto key_code = libinput_event_keyboard_get_key(keyboard_event);
-        const auto* const key_name_str =
-          libevdev_event_code_get_name(EV_KEY, static_cast<unsigned int>(key_code));
-        const auto key_name =
-          key_name_str != nullptr ? std::string_view(key_name_str) : std::string_view("UNKNOWN");
+        const auto* key_name_str = libevdev_event_code_get_name(EV_KEY, static_cast<unsigned int>(key_code));
+        const auto key_name = key_name_str != nullptr ? std::string_view(key_name_str) : std::string_view("UNKNOWN");
         // const auto time_now = std::chrono::system_clock::now();
 
-        common::KeystrokeEvent keystroke{
-          .key_name = key_name,
-          .date = "FIX_ME", // std::format("{:%Y-%m-%d}",
-          .key_code = key_code,
-          // std::chrono::time_point_cast<std::chrono::days>(time_now)),
-          .count = 1};
+        common::KeystrokeEvent keystroke{.key_name = key_name,
+                                         .date = "FIX_ME", // std::format("{:%Y-%m-%d}",
+                                         .key_code = key_code,
+                                         // std::chrono::time_point_cast<std::chrono::days>(time_now)),
+                                         .count = 1};
 
         logger.debug("Added keystroke [{}/{}] to buffer: {} (code: {})",
                      buffer_.size() + 1,
@@ -247,8 +236,7 @@ Then log out and log back in for the changes to take effect.
     auto should_flush() const -> bool
     {
         if (buffer_.size() >= BUFFER_SIZE) {
-            common::Logger::instance().debug("Flushing buffer: size threshold reached ({} events)",
-                                             buffer_.size());
+            common::Logger::instance().debug("Flushing buffer: size threshold reached ({} events)", buffer_.size());
             return true;
         }
 
@@ -256,8 +244,8 @@ Then log out and log back in for the changes to take effect.
             const auto elapsed_duration = Clock::now() - last_flush_time_;
 
             if (elapsed_duration >= std::chrono::seconds(BUFFER_TIMEOUT)) {
-                common::Logger::instance().debug(
-                  "Flushing buffer: time threshold reached ({}s elapsed)", BUFFER_TIMEOUT);
+                common::Logger::instance().debug("Flushing buffer: time threshold reached ({}s elapsed)",
+                                                 BUFFER_TIMEOUT);
                 return true;
             }
         }
@@ -273,13 +261,10 @@ Then log out and log back in for the changes to take effect.
         }
 
         if (buffer_callback_) {
-            const auto elapsed_seconds = std::chrono::duration_cast<std::chrono::duration<double>>(
-                                           Clock::now() - last_flush_time_)
-                                           .count();
+            const auto elapsed_seconds =
+              std::chrono::duration_cast<std::chrono::duration<double>>(Clock::now() - last_flush_time_).count();
             common::Logger::instance().debug(
-              "Flushing buffer with {} events in {:.2f}s to database",
-              buffer_.size(),
-              elapsed_seconds);
+              "Flushing buffer with {} events in {:.2f}s to database", buffer_.size(), elapsed_seconds);
 
             buffer_callback_(buffer_);
         }
