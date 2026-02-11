@@ -1,7 +1,6 @@
 chrono
 clangd
 domi
-flto
 gersemi
 gtkmm
 libevdev
@@ -13,16 +12,3 @@ nolintnextline
 println
 sigc
 sqlitecpp
-wconversion
-wdouble
-werror
-wextra
-wmisleading
-wnon
-wnull
-woverloaded
-wpedantic
-wshadow
-wsign
-wunused
-wuseless
