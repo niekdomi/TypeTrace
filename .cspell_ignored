@@ -3,6 +3,7 @@ clangd
 cmaketoolchain
 conanfile
 dcmake
+domi
 gersemi
 gtkmm
 libevdev

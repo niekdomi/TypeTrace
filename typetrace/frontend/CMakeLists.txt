@@ -1,9 +1,7 @@
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTKMM_VARS REQUIRED IMPORTED_TARGET gtkmm-4.0)
 
-set(FRONTEND_SOURCES
-    main.cpp
-)
+set(FRONTEND_SOURCES main.cpp)
 
 add_executable(typetrace_frontend ${FRONTEND_SOURCES})
 
