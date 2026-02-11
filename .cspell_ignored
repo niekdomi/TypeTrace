@@ -12,3 +12,6 @@ nolintnextline
 println
 sigc
 sqlitecpp
+cmaketoolchain
+DCMAKE
+conanfile

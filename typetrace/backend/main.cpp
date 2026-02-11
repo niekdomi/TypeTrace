@@ -1,8 +1,10 @@
 #include "cli.hpp"
 
 #include <cstdlib>
+#include <exception>
 #include <iostream>
 #include <print>
+#include <span>
 
 auto main(int argc, char* argv[]) -> int
 {
@@ -27,6 +29,10 @@ auto main(int argc, char* argv[]) -> int
     }
     catch (const std::exception& e) {
         std::println(std::cerr, "Fatal error: {}", e.what());
+        return EXIT_FAILURE;
+    }
+    catch (...) {
+        std::println(std::cerr, "An unknown fatal error occurred");
         return EXIT_FAILURE;
     }
 }

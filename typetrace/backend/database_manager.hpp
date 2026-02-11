@@ -44,7 +44,7 @@ class DatabaseManager final
                 | static_cast<unsigned int>(SQLite::OPEN_CREATE));
 
             // WAL mode
-            manager.db_->exec(OPTIMIZE_DATABASE_SQL);
+            manager.db_->exec(common::OPTIMIZE_DATABASE_SQL);
             TRY(manager.create_tables());
             logger.info("Database tables created successfully");
         }
@@ -62,7 +62,8 @@ class DatabaseManager final
 
     /// Writes a buffer of keystroke events to the database
     [[nodiscard]]
-    auto write_to_database(const std::vector<KeystrokeEvent>& buffer) -> std::expected<void, Error>
+    auto write_to_database(const std::vector<common::KeystrokeEvent>& buffer)
+      -> std::expected<void, Error>
     {
         if (buffer.empty()) {
             return {};
@@ -70,7 +71,7 @@ class DatabaseManager final
 
         try {
             SQLite::Transaction transaction(*db_);
-            SQLite::Statement stmt(*db_, UPSERT_KEYSTROKE_SQL);
+            SQLite::Statement stmt(*db_, common::UPSERT_KEYSTROKE_SQL);
 
             for (const auto& event : buffer) {
                 stmt.bind(1, static_cast<int>(event.key_code));
@@ -103,7 +104,7 @@ class DatabaseManager final
     auto create_tables() -> std::expected<void, Error>
     {
         try {
-            db_->exec(CREATE_KEYSTROKES_TABLE_SQL);
+            db_->exec(common::CREATE_KEYSTROKES_TABLE_SQL);
         }
         catch (const SQLite::Exception& e) {
             return std::unexpected(

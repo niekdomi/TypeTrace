@@ -48,8 +48,9 @@ class EventHandler
     }
 
     /// Sets the callback function to be called when the buffer needs to be flushed
-    auto set_buffer_callback(std::function<void(const std::vector<KeystrokeEvent>&)> callback)
-      -> void
+    auto
+      set_buffer_callback(std::function<void(const std::vector<common::KeystrokeEvent>&)> callback)
+        -> void
     {
         buffer_callback_ = std::move(callback);
     }
@@ -202,7 +203,8 @@ Then log out and log back in for the changes to take effect.
 
     /// Processes a libinput keyboard event into a keystroke event
     [[nodiscard]]
-    auto process_keyboard_event(struct libinput_event* event) -> std::optional<KeystrokeEvent>
+    auto process_keyboard_event(struct libinput_event* event)
+      -> std::optional<common::KeystrokeEvent>
     {
         auto& logger = common::Logger::instance();
 
@@ -224,11 +226,12 @@ Then log out and log back in for the changes to take effect.
           key_name_str != nullptr ? std::string_view(key_name_str) : std::string_view("UNKNOWN");
         // const auto time_now = std::chrono::system_clock::now();
 
-        KeystrokeEvent keystroke{.key_code = key_code,
-                                 .key_name = key_name,
-                                 .date = "FIX_ME", // std::format("{:%Y-%m-%d}",
-                                 // std::chrono::time_point_cast<std::chrono::days>(time_now)),
-                                 .count = 1};
+        common::KeystrokeEvent keystroke{
+          .key_name = key_name,
+          .date = "FIX_ME", // std::format("{:%Y-%m-%d}",
+          .key_code = key_code,
+          // std::chrono::time_point_cast<std::chrono::days>(time_now)),
+          .count = 1};
 
         logger.debug("Added keystroke [{}/{}] to buffer: {} (code: {})",
                      buffer_.size() + 1,
@@ -285,10 +288,10 @@ Then log out and log back in for the changes to take effect.
         last_flush_time_ = Clock::now();
     }
 
-    std::vector<KeystrokeEvent> buffer_;
+    std::vector<common::KeystrokeEvent> buffer_;
     Clock::time_point last_flush_time_;
 
-    std::function<void(const std::vector<KeystrokeEvent>&)> buffer_callback_;
+    std::function<void(const std::vector<common::KeystrokeEvent>&)> buffer_callback_;
 
     std::unique_ptr<struct libinput, decltype(&libinput_unref)> li_{nullptr, &libinput_unref};
     std::unique_ptr<struct udev, decltype(&udev_unref)> udev_{nullptr, &udev_unref};

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace typetrace {
+namespace typetrace::common {
 
 // ============================================================================
 // INSERT Queries
@@ -87,4 +87,4 @@ constexpr const char* GET_TOP_KEYS_SQL = {
        ORDER BY total_presses DESC
        LIMIT ?;)"};
 
-} // namespace typetrace
+} // namespace typetrace::common

@@ -17,7 +17,7 @@
 #include <spdlog/spdlog.h>
 #include <utility>
 
-namespace common {
+namespace typetrace::common {
 
 /// Singleton logger wrapper around spdlog
 class Logger final
@@ -96,4 +96,4 @@ class Logger final
     {}
 };
 
-} // namespace common
+} // namespace typetrace::common

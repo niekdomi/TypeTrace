@@ -3,16 +3,16 @@
 #include <cstdint>
 #include <string_view>
 
-namespace typetrace {
+namespace typetrace::common {
 
 struct KeystrokeEvent
 {
-    std::uint32_t key_code;
     std::string_view key_name;
     std::string_view date;
-    int count{0}; // Added count field
+    std::uint32_t key_code;
+    unsigned int count{0};
 };
 
-static_assert(sizeof(KeystrokeEvent) <= 48, "KeystrokeEvent is too large");
+static_assert(sizeof(KeystrokeEvent) == 40);
 
-} // namespace typetrace
+} // namespace typetrace::common

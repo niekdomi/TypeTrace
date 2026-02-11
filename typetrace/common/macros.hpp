@@ -1,6 +1,6 @@
 #pragma once
 
-namespace kumi {
+namespace typetrace::common {
 
 // NOLINTBEGIN(cppcoreguidelines-macro-usage)
 
@@ -19,4 +19,4 @@ namespace kumi {
 
 // NOLINTEND(cppcoreguidelines-macro-usage)
 
-} // namespace kumi
+} // namespace typetrace::common
