@@ -1,0 +1,6 @@
+---
+InheritParentConfig: true
+
+Checks: >
+  -bugprone-unchecked-optional-access,
+  -fuchsia-multiple-inheritance,

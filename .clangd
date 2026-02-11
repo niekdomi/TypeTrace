@@ -1,8 +1,7 @@
 ---
 CompileFlags:
-  Add:
-    - -xc++
-    - -std=c++23
-    - -D_GNU_SOURCE
-    - -Ibuild/generated
+  CompilationDatabase: build/Debug
   Compiler: clang
+
+Documentation:
+  CommentFormat: Doxygen

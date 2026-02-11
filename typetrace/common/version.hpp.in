@@ -1,0 +1,13 @@
+#ifndef TYPETRACE_VERSION_HPP
+#define TYPETRACE_VERSION_HPP
+
+#include <string_view>
+
+namespace typetrace {
+
+constexpr std::string_view PROJECT_NAME = "@PROJECT_NAME@";
+constexpr std::string_view PROJECT_VERSION = "@PROJECT_VERSION@";
+
+} // namespace typetrace
+
+#endif // TYPETRACE_VERSION_HPP

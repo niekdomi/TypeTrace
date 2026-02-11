@@ -1,0 +1,26 @@
+TypeTrace - Track your keyboard usage
+================================================================================
+
+
+WIP, see the old version for inspiration: https://github.com/niekdomi/TypeTrace-py
+
+
+REQUIREMENTS
+------------
+
+- CMake 3.30+
+- Clang 21+
+- Conan 2.0+
+- gtkmm-4.0
+
+- Recommended:
+    - Ninja
+    - Mold
+    - Ccache
+
+
+LICENSE
+-------
+
+GPL-3.0
+See LICENSE file for full details.

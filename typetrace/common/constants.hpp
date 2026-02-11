@@ -1,5 +1,4 @@
-#ifndef TYPETRACE_CONSTANTS_HPP
-#define TYPETRACE_CONSTANTS_HPP
+#pragma once
 
 #include <cstddef>
 #include <string_view>
@@ -33,4 +32,3 @@ constexpr std::string_view DB_FILE_NAME = "TypeTrace.db";
 
 } // namespace typetrace
 
-#endif

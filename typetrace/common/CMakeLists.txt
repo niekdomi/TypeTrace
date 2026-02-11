@@ -1,30 +1,18 @@
-# Common library for TypeTrace
-
-# Find required dependencies
 find_package(spdlog CONFIG REQUIRED)
 find_package(SQLiteCpp CONFIG REQUIRED)
 
-# Source files
-set(COMMON_SOURCES logger/logger.cpp)
+add_library(typetrace_common INTERFACE)
 
-# Create static library
-add_library(typetrace_common STATIC ${COMMON_SOURCES})
-
-# Link libraries
 target_link_libraries(
     typetrace_common
-    PUBLIC spdlog::spdlog SQLiteCpp
+    INTERFACE
+        spdlog::spdlog
+        SQLiteCpp
 )
 
-# Include directories
 target_include_directories(
     typetrace_common
-    PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        constants
-        exceptions
-        logger
-        sql
-        types
-        version
+    INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_BINARY_DIR}/generated
 )
